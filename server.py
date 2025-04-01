@@ -9,15 +9,18 @@ def emo_detector():
     text_to_analyse = request.args.get('textToAnalyze')
     response = emotion_detector(text_to_analyse)
    
-    formatted_response = (
-        f"For the given statement, the system response is "
-        f"'anger': {response['anger']}, "
-        f"'disgust': {response['disgust']}, "
-        f"'fear': {response['fear']}, "
-        f"'joy': {response['joy']} and "
-        f"'sadness': {response['sadness']}. "
-        f"The dominant emotion is {response['dominant_emotion']}."
-    )
+    if response['dominant_emotion'] is None:
+        return "Invalid text! Please try again!."
+    else:
+        formatted_response = (
+            f"For the given statement, the system response is "
+            f"'anger': {response['anger']}, "
+            f"'disgust': {response['disgust']}, "
+            f"'fear': {response['fear']}, "
+            f"'joy': {response['joy']} and "
+            f"'sadness': {response['sadness']}. "
+            f"The dominant emotion is {response['dominant_emotion']}."
+        )
     return  formatted_response 
 
 @app.route("/")
